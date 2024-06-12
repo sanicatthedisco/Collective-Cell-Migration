@@ -13,6 +13,8 @@ from os import path
 
 from Math import Vector2 as V2, Curve
 
+DEFAULT_SCALE = 4.4053
+
 # *******
 # Classes
 # *******
@@ -91,8 +93,8 @@ class Trajectory():
 # Represents all of the data from a single movie of a wound
 class Experiment():
     def __init__(self, tracks: list[Track], margin: Curve, 
-                 condition: str, date: str,
-                 start_time: float, end_time: float, index:int=0):
+                 condition: str="", date: str="",
+                 start_time: float=0, end_time: float=math.inf, index:int=0):
         # evil list comp lol
         self.tracks = [
             Track([pt for pt in track.points 
@@ -125,7 +127,7 @@ class Experiment():
 # *******
 
 # Parse data from trackmate
-def tracks_from_xml(file_path: str, scale:float=1) -> list[Track]:
+def tracks_from_xml(file_path: str, scale:float=DEFAULT_SCALE) -> list[Track]:
     # Get and parse file
     tree = ET.parse(file_path)
     root = tree.getroot()
