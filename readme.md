@@ -9,7 +9,11 @@ This project has two components. In `scripts` are Fiji scripts which allow for i
 
 ## Scripts
 
-*Under construction*
+To install a script, locate your Fiji installation directory. 
+- On mac: Find the Fiji app, usually in your applications folder. Right-click on it and select "show package contents." 
+- On windows: Find the Fiji app's installation site, maybe in C://Program Files. Open the Fiji folder.
+  
+Open the `scripts` folder and create a new folder called `My scripts`. Drag the script file into this new folder. Now the script is installed! If Fiji is open you will need to restart it.
 
 ## Analysis
 
