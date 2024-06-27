@@ -20,13 +20,44 @@ DEFAULT_SCALE = 4.4053
 # *******
 
 class TimePoint():
+    """
+    A class which represents a 2 dimensional position and its associated point in time.
+
+    Attributes
+    ----------
+    t: float
+        the time coordinate of the point
+    pos: Math.Vector2
+        the position of the point
+    """
     def __init__(self, time: float, position: V2):
         self.t = time
         self.pos = position
     def __repr__(self):
         return "(" + str(round(self.t)) + ", " + str(round(self.pos.x)) + ", " + str(round(self.pos.y)) + ")"
-
 class Track():
+    """
+    A class which represents a cell's path through space as it migrates.
+
+    Attributes
+    ----------
+    points: list[TimePoint]
+        the time points in this Track
+    
+    Methods
+    -------
+    add_point(point: TimePoint)
+        adds a point to the track's list of points
+    
+    sort_and_remove_duplicates() -> Track
+        removes duplicate points from a track's points,
+        then sorts and returns them
+    
+    project_onto_line(p1: Vector2, p2: Vector2) -> Trajectory
+        flattens the track into a 1D trajectory by projecting it along a line
+        defined by the start and end points p1 and p2
+
+    """
     def __init__(self, points: list[TimePoint]):
         self.points = points
 
@@ -64,6 +95,11 @@ class Track():
     
     def get_times(self) -> list[float]:
         return [pt.t for pt in self.points]
+    
+    def scale(self, time_factor: float, space_factor: float):
+        for i in range(len(self.points)):
+            self.points[i].t *= time_factor
+            self.points[i].pos = self.points[i].pos * space_factor
 
 # A flattened version of a track with only times and displacements
 # points are in long form unlike Track for convenience
@@ -94,7 +130,7 @@ class Trajectory():
 class Experiment():
     def __init__(self, tracks: list[Track], margin: Curve, 
                  condition: str="", date: str="",
-                 start_time: float=0, end_time: float=math.inf, index:int=0):
+                 start_time: float=0, end_time: float=math.inf, index:int=1):
         # evil list comp lol
         self.tracks = [
             Track([pt for pt in track.points 
@@ -102,6 +138,9 @@ class Experiment():
             for track in tracks
         ]
         self.margin = margin
+        self.condition = condition
+        self.date = date
+        self.index = index
         self.name = condition + str(date)
     
     def bin_tracks(self, dist_bins: list[float]) -> list[dict]:
@@ -158,16 +197,18 @@ def tracks_from_xml(file_path: str, scale:float=DEFAULT_SCALE) -> list[Track]:
                     )
                 )
         
+        if len(track.points) == 0:
+            continue
         # Bit of a hack sorry -- the points come out unsorted and with some dupes
         tracks.append(track.sort_and_remove_duplicates())
     
     return tracks
 
 # Parse margin data from roi export script
-def margin_from_csv(file_path: str) -> Curve:
+def margin_from_csv(file_path: str, scale:float=1) -> Curve:
     margin_data = pd.read_csv(file_path)
-    margin_x = [float(_) for _ in margin_data["1"][1:]]
-    margin_y = [float(_) for _ in margin_data["1.1"][1:]]
+    margin_x = [float(_) * scale for _ in margin_data["1"][1:]]
+    margin_y = [float(_) * scale for _ in margin_data["1.1"][1:]]
 
     points = []
     for x, y in zip(margin_x, margin_y):
@@ -179,7 +220,7 @@ def load_experiment(root_path: str, condition: str, date: str, start_time: float
     track_path = path.join(root_path, date, date + condition + "_tracking.xml")
     margin_path = path.join(root_path, date, date + condition +  "_margin.csv")
     tracks = tracks_from_xml(track_path, scale)
-    margin = margin_from_csv(margin_path)
+    margin = margin_from_csv(margin_path, 1)
     return Experiment(tracks, margin, condition, date, start_time, end_time)
 
 # *********
@@ -198,25 +239,26 @@ def find_tracks_in_range(tracks: list[Track], margin: Curve, min_distance: float
     return tracks_in_range
 
 def average_trajectories(trajectories: list[Trajectory]) -> Trajectory:
-    disps_ = [traj.displacements for traj in trajectories]
+    disps_ = [traj.displacements for traj in trajectories 
+              if not pd.isna(traj.displacements[0])]
     mean_disps = np.mean(disps_, axis=0)
     # assumes that trajectories all have same times.
     # i.e. resample before using this method
     # should fix
-    return Trajectory(trajectories[0].times, mean_disps)
+    return Trajectory(trajectories[1].times, mean_disps)
 
 # *************
 # Visualization
 # *************
 
-def plot_tracks_by_bin(tracks, margin, dist_bins, colors, fig, ax):
+def plot_tracks_by_bin(tracks, margin: Curve, dist_bins, colors, fig, ax):
     for i in range(len(dist_bins)-1):
         tracks_in_bin = find_tracks_in_range(tracks, margin, dist_bins[i], dist_bins[i+1])
         for track in tracks_in_bin:
             x_, y_ = track.get_positions_in_long_form()
             ax.plot(x_, y_, c=colors[i])
     
-    ax.plot(margin[0], margin[1])
+    ax.plot(margin.to_long_form()[0], margin.to_long_form()[1])
 
 """
 def plot_tracks(tracks: list[Track], margin: Curve, fig, ax):

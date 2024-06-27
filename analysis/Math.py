@@ -27,9 +27,15 @@ class Vector2():
         x2, y2 = p2.x, p2.y
         x0, y0 = self.x, self.y
 
-        m = (y2-y1)/(x2-x1)
+        if x2-x1 == 0:
+            m = math.inf
+        else:
+            m = (y2-y1)/(x2-x1)
         b = y1 - (m*x1)
-        m_prime = -(1/m)
+        if m == 0:
+            m_prime = -math.inf
+        else:
+            m_prime = -(1/m)
         b_prime = y0 - (m_prime * x0)
 
         x_star = (b_prime - b) / (m - m_prime)
@@ -85,3 +91,6 @@ class Curve():
     # Curve points are just (x, y) tuples
     def __init__(self, points: list[Vector2]):
         self.points = points
+    
+    def to_long_form(self):
+        return ([p.x for p in self.points], [p.y for p in self.points])
