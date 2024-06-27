@@ -7,7 +7,7 @@ Malamy Lab, University of Chicago
 ## Overview
 This project has two components. In `scripts` are Fiji scripts which allow for image registration to landmarks and exporting RoI coordinates. In `analysis` are python files which contain utilities for analyzing cell migration tracks stored in TrackMate files.
 
-If you don't know python, never fear! All of the software in the `analysis` folder has been packaged into a handy google colab project, found here: [JACMAD Software](https://colab.research.google.com/drive/129qx-whFyeDSjB-4Q8JDnjEofPaYcQJE?usp=sharing).
+If you don't know python, never fear! All of the software in the `analysis` folder has been packaged into a handy google colab project, found here: [JACMAS Software](https://colab.research.google.com/drive/129qx-whFyeDSjB-4Q8JDnjEofPaYcQJE?usp=sharing).
 
 ## Scripts
 
