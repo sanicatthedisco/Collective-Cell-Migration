@@ -23,6 +23,8 @@ Again, this software has been packaged in the [JACMAS Software](https://colab.re
 
 To use either version of the software, you will need to create two configuration files. I set it up this way because I analyzed my data blinded. You don't have to do the same (although it is convenient this way!). The metadata file has everything you record about the movie while you're blinded, while the key file corresponds movie IDs to their conditions so you don't have to know what each ID is.
 
+*A note on units: I conducted all of my analysis in pixels and frames, and then converted at the very end to microns and seconds. I know this sucks and I'm sorry. It creates a few problems that I'm forseeing being annoying. First, the margin ROIs get exported in pixels, while the trackmate measurements are exported in whatever units your tiff file is set to. For me, all of my tiff files were off from the pixel value by a factor of 2. I created two parameters to deal with this which are explained in the colab.*
+
 #### Metadata
 This file can be called anything -- I'll refer to it as `metadata.csv`. In a program like excel or sheets, create a new spreadsheet with the following columns: `movie_id`, `start_time`, `stop_time`, `is_excluded`, `linear_start_time`, and `linear_stop_time`. (Everything is case sensitive!) You can also include other columns for your own bookkeeping; only those with the above names are read by the software. Each row corresponds to the metadata for a given cell migration movie. Populate each row with the following information for each column:
 
