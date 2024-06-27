@@ -19,6 +19,29 @@ Open the `scripts` folder and create a new folder called `My scripts`. Drag the 
 
 ## Analysis
 
+Again, this software has been packaged in the [JACMAS Software](https://colab.research.google.com/drive/129qx-whFyeDSjB-4Q8JDnjEofPaYcQJE?usp=sharing) on google colab. For those that know Python, a summary of the types and functions I have implemented for track analysis is given below.
+
+To use either version of the software, you will need to create two configuration files. I set it up this way because I analyzed my data blinded. You don't have to do the same (although it is convenient this way!). The metadata file has everything you record about the movie while you're blinded, while the key file corresponds movie IDs to their conditions so you don't have to know what each ID is.
+
+#### Metadata
+This file can be called anything -- I'll refer to it as `metadata.csv`. In a program like excel or sheets, create a new spreadsheet with the following columns: `movie_id`, `start_time`, `stop_time`, `is_excluded`, `linear_start_time`, and `linear_stop_time`. (Everything is case sensitive!) You can also include other columns for your own bookkeeping; only those with the above names are read by the software. Each row corresponds to the metadata for a given cell migration movie. Populate each row with the following information for each column:
+
+- `movie_id`: This is whatever you have chosen to name your csv and xml files for the movies. I used numbers, but it can be text if you'd like (if that crashes the program use numbers though).
+- `start_time`: Often movies begin with some time you don't want to record. Put the start time, in whatever time units your movie uses, in this cell.
+- `stop_end`: Same as start time, just where you'd like the movie to end.
+- `is_excluded`: You can put a "Y" in this column if you'd like to exclude a movie from analysis; otherwise, leave it blank.
+- `linear_start_time`: This is the start cutoff for linear interpolation; you can use it to specify the range in which the data is relatively linear so the software will only calculate speeds within this range. These should be in seconds, or whatever unit you've set the software to convert everything into.
+- `linear_stop_time`: Same as above, the end time for linear interpolation.
+
+#### Key
+Create a seperate spreadsheet with the following columns: `date`, `condition`, `index`, and `movie_id`:
+- `date` is the date on which the movie was taken
+- `condition` is the experimental condition of the movie
+- `index`: in case you took multiple movies of the same condition on the same day, you can number them with `index`.
+- `movie_id`: the same as `movie_id` in your `metadata.csv` file and as in the names of your `.xml` and `.csv` files.
+
+See examples in `analysis/examples`.
+
 ### Basic types
 
 - The `Vector2` class represents a point in 2D space and has `x` and `y` properties, as well as a variety of convenience methods for doing linear algebra.
