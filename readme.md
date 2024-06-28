@@ -42,7 +42,7 @@ Create a seperate spreadsheet with the following columns: `date`, `condition`, `
 - `index`: in case you took multiple movies of the same condition on the same day, you can number them with `index`.
 - `movie_id`: the same as `movie_id` in your `metadata.csv` file and as in the names of your `.xml` and `.csv` files.
 
-See examples in `analysis/examples`.
+See example metadata and key files in the locations described in the master document in the Malamy lab box.
 
 ### Basic types
 
