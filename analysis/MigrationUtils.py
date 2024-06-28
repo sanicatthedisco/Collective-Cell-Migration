@@ -13,7 +13,7 @@ from os import path
 
 from Math import Vector2 as V2, Curve
 
-DEFAULT_SCALE = 4.4053
+DEFAULT_SCALE = 1
 
 # *******
 # Classes
@@ -166,7 +166,7 @@ class Experiment():
 # *******
 
 # Parse data from trackmate
-def tracks_from_xml(file_path: str, scale:float=DEFAULT_SCALE) -> list[Track]:
+def tracks_from_xml(file_path: str, scale:float=1) -> list[Track]:
     # Get and parse file
     tree = ET.parse(file_path)
     root = tree.getroot()

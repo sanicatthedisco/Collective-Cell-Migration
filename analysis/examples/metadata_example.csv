@@ -1,4 +1,4 @@
-movie_id,start_time,stop_time,Notes,Grade,is_excluded,linear_start_time,linear_stop_time,scale
+﻿movie_id,start_time,stop_time,Notes,Grade,is_excluded,linear_start_time,linear_stop_time,scale
 1,,230,,A,,750,2000,
 2,,,Front tears off and cells die,F,Y,,,
 3,,,Some movement but the whole wound bed twists,F,Y,,,
@@ -10,7 +10,7 @@ movie_id,start_time,stop_time,Notes,Grade,is_excluded,linear_start_time,linear_s
 9,,,,,,250,1500,
 10,,80,"outlier (too big), but can't exclude just from movie",,,,750,
 11,,,"Large wound in back on side, tried to take cells far from it",,,1000,,
-12,,80,"outlier. Can be excluded because it the two sides touch very quickly, and I think that this doesn�t leave time for the cells in the back to begin tomigrate.",,Y,,,
+12,,80,"outlier. Can be excluded because it the two sides touch very quickly, and I think that this doesn’t leave time for the cells in the back to begin tomigrate.",,Y,,,
 13,,,,,,,,
 14,,,,,,250,1750,
 15,,,Just died,,Y,,,

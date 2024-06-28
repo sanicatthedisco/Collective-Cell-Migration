@@ -69,6 +69,8 @@ We can also import the wound margin as a `Curve` object from the csv file.
 ```python
 margin = mg.margin_from_csv(path_to_file)
 ```
+*However, if your files are in any other units than pixels, your tracks will havebeen exported in those units while your margins be exported in pixels. To correct for this, both `tracks_from_xml` and `margin_from_csv` take an option `scale` parameter, a float which all points in the object are multiplied by. For example, if your movies are in microns, use `margin_from_csv(path_to_file, scale=microns_per_pixel)` (for units in microns) or `tracks_from_xml(path_to_file, scale=pixels_per_micron)` (for units in pixels) where `microns_per_pixel = 1/pixels_per_micron`.*
+
 We can calculate the initial distance of a track from the wound margin like so:
 ```python
 my_track = tracks[0]
