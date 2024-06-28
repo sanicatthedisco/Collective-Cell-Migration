@@ -35,6 +35,8 @@ This file can be called anything -- I'll refer to it as `metadata.csv`. In a pro
 - `linear_start_time`: This is the start cutoff for linear interpolation; you can use it to specify the range in which the data is relatively linear so the software will only calculate speeds within this range. These should be in seconds, or whatever unit you've set the software to convert everything into. Leave blank for zero.
 - `linear_stop_time`: Same as above, the end time for linear interpolation. Leave blank for infinity.
 
+For examples and templates for both `metadata.csv` and `key.csv`, see `analysis/examples`.
+
 #### Key
 Create a seperate spreadsheet with the following columns: `date`, `condition`, `index`, and `movie_id`:
 - `date` is the date on which the movie was taken
