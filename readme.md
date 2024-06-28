@@ -29,11 +29,11 @@ To use either version of the software, you will need to create two configuration
 This file can be called anything -- I'll refer to it as `metadata.csv`. In a program like excel or sheets, create a new spreadsheet with the following columns: `movie_id`, `start_time`, `stop_time`, `is_excluded`, `linear_start_time`, and `linear_stop_time`. (Everything is case sensitive!) You can also include other columns for your own bookkeeping; only those with the above names are read by the software. Each row corresponds to the metadata for a given cell migration movie. Populate each row with the following information for each column:
 
 - `movie_id`: This is whatever you have chosen to name your csv and xml files for the movies. I used numbers, but it can be text if you'd like (if that crashes the program use numbers though).
-- `start_time`: Often movies begin with some time you don't want to record. Put the start time, in whatever time units your movie uses, in this cell.
-- `stop_end`: Same as start time, just where you'd like the movie to end.
+- `start_time`: Often movies begin with some time you don't want to record. Put the start time, in whatever time units your movie uses, in this cell. Can be left blank for zero.
+- `stop_end`: Same as start time, just where you'd like the movie to end. Can be left blank for infinity.
 - `is_excluded`: You can put a "Y" in this column if you'd like to exclude a movie from analysis; otherwise, leave it blank.
-- `linear_start_time`: This is the start cutoff for linear interpolation; you can use it to specify the range in which the data is relatively linear so the software will only calculate speeds within this range. These should be in seconds, or whatever unit you've set the software to convert everything into.
-- `linear_stop_time`: Same as above, the end time for linear interpolation.
+- `linear_start_time`: This is the start cutoff for linear interpolation; you can use it to specify the range in which the data is relatively linear so the software will only calculate speeds within this range. These should be in seconds, or whatever unit you've set the software to convert everything into. Leave blank for zero.
+- `linear_stop_time`: Same as above, the end time for linear interpolation. Leave blank for infinity.
 
 #### Key
 Create a seperate spreadsheet with the following columns: `date`, `condition`, `index`, and `movie_id`:
